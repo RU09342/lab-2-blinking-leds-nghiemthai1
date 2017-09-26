@@ -13,8 +13,11 @@ The desired button pin and bit must be to 0 to configure it to be an input.
 Also,  
 ```c
 PXREN |= BITX;
-``` must be used to enable the pullup resistor for that button.     
-By using the line ```c PM5CTL0 = ~LOCKLPM5; ``` ,the default high impedance on the board is disabled.
+``` 
+must be used to enable the pullup resistor for that button.     
+By using the line 
+```c PM5CTL0 = ~LOCKLPM5; ``` 
+,the default high impedance on the board is disabled.
 This high impedance serves to get rid of any cross currents, but is turned off later.
 
 While(1) keeps the program in the loop forever.
