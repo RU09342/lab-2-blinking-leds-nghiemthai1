@@ -65,7 +65,7 @@
 
 int main(void)
 {
-    WDTCTL = WDTPW | WDTHOLD;               // Stop WDT
+    WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer, else the processor will reset.
 
     // Configure GPIO
     P1OUT &= ~BIT0;                         // Clear P1.0 output latch for a defined power-on state
@@ -77,6 +77,6 @@ int main(void)
     while(1)
     {
         P1OUT ^= BIT0;                      // Toggle LED
-        __delay_cycles(100000);
+        __delay_cycles(100000);				//Delay for 100000*(1/MCLK)=0.1s
     }
 }

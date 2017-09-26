@@ -66,17 +66,17 @@
 
 int main(void)
 {
-  WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer
+  WDTCTL = WDTPW + WDTHOLD;                 // Stop watchdog timer, else the processor will reset.
   P1DIR |= 0x01;                            // Set P1.0 to output direction
 
-  for (;;)
+  for (;;)									// Continuous loop
   {
-    volatile unsigned int i;
+    volatile unsigned int i;				// Delay variable
 
     P1OUT ^= 0x01;                          // Toggle P1.0 using exclusive-OR
 
-    i = 50000;                              // Delay
-    do (i--);
+    i = 50000;                              // Delay for 50000*(1/MCLK)=0.05s
+    do (i--);								// Decrease i by 1 while i is not equal to 0
     while (i != 0);
   }
 }

@@ -1,25 +1,26 @@
 # Multiple Blink
-Now that we have blinked at least 1 LED, what about blinking multiple LEDS at the same time? The minimum that you need to develop is blinking at least two LEDs at two different rates. Although I am not going to give you a speed, you should probably pick a rate which is visible to a standard human. I really hope that you take this further and perform some of the extra work for this part of the lab exercise.
 
+## How does this work
+Blinks 2 LEDs on the board at a half duty cycles.
+Any board specific pins and pits will be substituted with the variable X.
+The watchdog timer must be stopped with the line WDTCTL = WDTPW + WDTHOLD or WDTCTL = WDTPW | WDTHOLD.
+Else, the processor will reset.
+The desired led pin and bit must be set to 1 to configure it to be an output.
+The desired button pin and bit must be to 0 to configure it to be an input.
+Also,  PXREN |= BITX; must be used to enable the pullup resistor for that button.     
+By using the line PM5CTL0 = ~LOCKLPM5, the default high impedance on the board is disabled.
+This high impedance serves to get rid of any cross currents, but is turned off later.
 
-# YOU NEED TO CREATE THE FOLLOWING FOLDERS
-* MSP430G2553
-* MSP430F5529
-* MSP430FR2311
-* MSP430FR5994
-* MSP430FR6989
+While(1) keeps the program in the loop forever.
+An int is incremented and modulo'd by a number to blink the 2nd LED at a fraction of the rate of the first LED.
+Example, using the if statement (if j % 6 = 0), the rate of the LED will be a sixth of the other.
+PXOUT ^= BITX; flips that bit every time it runs. 
+__delay_cycles(100000) delays the next toggle by .1 seconds.
 
-## README
-Remember to replace this README with your README once you are ready to submit. I would recommend either making a copy of this file or taking a screen shot. There might be a copy of all of these README's in a folder on the top level depending on the exercise.
-
-## Extra Work
-When you take a look at the development boards, you are limited to what is built into the platform.
-
-### Even More LEDs
-Since up to this point you should have hopefully noticed that you are simply just controlling each pin on your processor. So... what is keeping you from putting an LED on each pin? Can you actually control the speed of each of these LEDs?
-
-### Patterned Lights
-If you can control a ton of LEDs, what is keeping you from having a little fun? Why not try and make something like a moving face or other moving object in lights. *CAUTION* I would only do this if you have finished the rest of the lab.
-
-### UART Pattern Control
-If you have been using UART, could you set which LEDs are on or off based off some UART command? Would you want to send an Array over UART such as [1 0 1 0] or would you want to send a byte that corresponds to the status? Can you not only say which LEDs are on, but also tell them to blink at a particular rate if they were on (so LED1 Blink every 100ms)?
+##Board specific changes!
+In the MPS430g2553 and the MSP430f5529 i must be declared as a volatile unsigned int.
+Both of these boards do not use __delay_cycles. Instead, they use i to count down from 50,000 in a for loop,
+Which accomplishes the same.
+The MSP430g2553 uses for(;;) to initalize an infinite loop instead of while(1)
+## How to implement the code
+To run this code, simply import the project folder into code composer, build. Plug in your MSP430, hit debug and watch the LED blink

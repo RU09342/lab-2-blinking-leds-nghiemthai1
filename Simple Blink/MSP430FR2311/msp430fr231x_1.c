@@ -68,7 +68,7 @@
 
 int main(void)
 {
-    WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer
+    WDTCTL = WDTPW | WDTHOLD;               // Stop watchdog timer, else the processor will reset.
 
     P1OUT &= ~BIT0;                         // Clear P1.0 output latch for a defined power-on state
     P1DIR |= BIT0;                          // Set P1.0 to output direction

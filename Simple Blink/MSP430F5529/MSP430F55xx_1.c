@@ -67,12 +67,12 @@ int main(void)
 {
   volatile unsigned int i;
 
-  WDTCTL = WDTPW+WDTHOLD;                   // Stop WDT
+  WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer, else the processor will reset.
   P1DIR |= BIT0;                            // P1.0 set as output
 
   while(1)                                  // continuous loop
   {
-    P1OUT ^= BIT0;                          // XOR P1.0
-    for(i=50000;i>0;i--);                   // Delay
+    P1OUT ^= BIT0;                          // Flip XOR P1.0 with "1"
+    for(i=50000;i>0;i--);                   // Delay for 50000*(1/MCLK)=0.05s
   }
 }

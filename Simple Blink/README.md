@@ -1,29 +1,26 @@
 # Simple Blink
-For starters, you will need to blink one of the on-board LED's at a particular rate. It is up to you to determine what rate you want to blink it at, however it has to be symmetrical (50% Duty Cycle), meaning equal times on and off. You should attempt multiple different speeds before moving on to the next part of the lab.
+## How does this work
+Blinks an LED on the board at a half duty cycle, no user input is needed.
+Any board specific pins and bits will be substituted with the variable X.
 
-## YOU NEED TO CREATE THE FOLLOWING FOLDERS
-* MSP430G2553
-* MSP430F5529
-* MSP430FR2311
-* MSP430FR5994
-* MSP430FR6989
+The watchdog timer must be stopped with the line WDTCTL = WDTPW + WDTHOLD or WDTCTL = WDTPW | WDTHOLD.
+Else, the processor will reset.
+The desired led pin and bit must be set to 1 to configure it to be an output.
+By using the line PM5CTL0 = ~LOCKLPM5, the default high impedance on the board is disabled.
+This high impedance serves to get rid of any cross currents, but is turned off later.
+ 
 
-## How to not damage your processor
-Remember that your microprocessors are not hooked up to a nuclear power plant and they can only provide a finite amount of current and power to your attached devices. For each of your processors you should see what the maximum supply current is for the digital output pins and note it in your designs. Diodes are an interesting device where the V-I curve becomes almost a short circuit after only a couple volts. If you have a diode biased to operate at say 1 volt above its turn on voltage, you are going to be drawing quite a bit of amperage. 
+While(1) keeps the program in the loop forever.
+PXOUT ^= BITX; flips that bit every time it runs.
+__delay_cycles(100000) delays the next toggle by .1 seconds.
 
-Before you actually begin this lab, take the time to mess around with the simulation below and understand what the importance of the series resistance is in the design. What does the resistance prevent from happening? Does having this resistance impact the performance of the LED?
+##Board specific changes!
+In the MSP430g2553 and the MSP430f5529, i must be declared as a volatile unsigned int.
+Also in the MSP430g2553 and the MSP430f5529 the default high impedance mode does not need to be disabled,
+As the lack one.
+Both of these boards do not use __delay_cycles. Instead, they use i to count down from 50,000 in a for loop,
+Which accomplishes the same.
+The MSP430g2553 uses for(;;) to initalize an infinite loop instead of while(1)
 
-<a href="http://everycircuit.com/circuit/5180823226810368">LED Current - EveryCircuit</a><br>
-<iframe width="560" height="360" src="http://everycircuit.com/embed/5180823226810368" frameborder="0"></iframe>
-
-## README
-Remember to replace this README with your README once you are ready to submit. I would recommend either making a copy of this file or taking a screen shot. There might be a copy of all of these README's in a folder on the top level depending on the exercise.
-
-## Extra Work
-Since this is so basic, there are a few things which might be interesting to implement.
-
-### UART Control: Single Character
-For starters, it would be interesting to tie in some of the UART code that was used before into this project. You might want to have the speed of the blinking controlled by a character sent over UART. For example, 's' could be a slow setting, 'm' could be medium speed, 'f' could be fast, and 'o' could be off.
-
-### UART Control: Rate Number
-Instead of depending on a character, what if we wanted to send a blinking period in milliseconds? So instead of 's', you could send something like '100' which corresponds to a 100 millisecond delay between the time the LED turns on again. Before you decide to tackle this, I would take a look at using a logic analyzer to see exactly what your computer is sending to your microprocessor. Also remember that the code previously provided will only service the UART Buffer one character at a time.
+## How to implement this on your computer
+To run this code, simply import it into code composer, then click build. After plugging in the MSP430, hit debug button then watch the LED1 blink
