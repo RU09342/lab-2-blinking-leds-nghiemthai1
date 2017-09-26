@@ -10,16 +10,17 @@ WDTCTL = WDTPW + WDTHOLD or WDTCTL = WDTPW | WDTHOLD.
 Else, the processor will reset.
 The desired led pin and bit must be set to 1 to configure it to be an output.
 By using the line 
-```c 
+```
 PM5CTL0 = ~LOCKLPM5
-''', the default high impedance on the board is disabled.
+```, the default high impedance on the board is disabled.
 This high impedance serves to get rid of any cross currents, but is turned off later.
  
 
 While(1) keeps the program in the loop forever.
-```c
+```
 PXOUT ^= BITX;
-``` flips that bit every time it runs.
+```
+ flips that bit every time it runs.
 __delay_cycles(100000) delays the next toggle by .1 seconds.
 
 ## Board specific changes!
