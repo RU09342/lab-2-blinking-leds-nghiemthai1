@@ -16,7 +16,9 @@ PXREN |= BITX;
 ``` 
 must be used to enable the pullup resistor for that button.     
 By using the line 
-```c PM5CTL0 = ~LOCKLPM5; ``` 
+```c 
+PM5CTL0 = ~LOCKLPM5; 
+``` 
 ,the default high impedance on the board is disabled.
 This high impedance serves to get rid of any cross currents, but is turned off later.
 
