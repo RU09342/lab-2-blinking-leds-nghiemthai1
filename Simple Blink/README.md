@@ -7,14 +7,10 @@ The watchdog timer must be stopped with the line
 ```c
 WDTCTL = WDTPW + WDTHOLD or WDTCTL = WDTPW | WDTHOLD.
 ```
-Else, the processor will reset.
-The desired led pin and bit must be set to 1 to configure it to be an output.
-By using the line 
-```c
-PM5CTL0 = ~LOCKLPM5
-``` 
-the default high impedance on the board is disabled.
-This high impedance serves to get rid of any cross currents, but is turned off later.
+Else, the processor will reset. <br />
+The desired led pins and bits must be set to 1 to configure it to be an output.
+The desired button pin and bit must be to 0 to configure it to be an input .<br />
+Also,  PXREN |= BITX; must be used to enable the pullup resistor for that button. <br /> 
  
 
 While(1) keeps the program in the loop forever.
@@ -31,6 +27,7 @@ As the lack one.
 Both of these boards do not use __delay_cycles. Instead, they use i to count down from 50,000 in a for loop,
 Which accomplishes the same.
 The MSP430g2553 uses for(;;) to initalize an infinite loop instead of while(1)
-
+Also, the msp430FRxxx series (FR6989, FR2311, and FR5994 in this case) need to use the line PM5CTL0 = ~LOCKLPM5 to disable the default high impedance on the board. 
+This high impedance serves to get rid of any cross currents, but is turned off later. <br />
 ## How to implement this on your computer
 To run this code, simply import it into code composer, then click build. After plugging in the MSP430, hit debug button then watch the LED1 blink

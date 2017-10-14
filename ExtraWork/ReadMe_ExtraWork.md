@@ -18,11 +18,6 @@ As load gradually increases, this changing ratio is what causes the fluctuating 
 If the button is pressed down, the two LEDs switch. The led that was previously getting brighter gets dimmers
 and vice versa.
 
-##Board specific changes!
-In the MPS430g2553 and the MSP430f5529 i must be declared as a volatile unsigned int.
-Both of these boards do not use __delay_cycles. Instead, they use i to count down from 50,000 in a for loop,
-Which accomplishes the same.
-The MSP430g2553 uses for(;;) to initalize an infinite loop instead of while(1)
 ## How to implement the code
 To run this code, simply import the project folder into code composer, then build. After plugging your MSP430, hit dubug. 
 One of the LED will dim, while the other one brighten. If you press the button, the reverse will happen.
