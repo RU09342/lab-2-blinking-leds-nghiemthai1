@@ -15,7 +15,7 @@ A 10k registor is also needed to connect the RST pin to the VCC pin of the G2553
 ## How to implement this project
 You going to need a breadboard, wires, a 3V battery, MSP430G2553, and resistors in order to implement this project.
 Follow the schematic provided below to build the circuit:
-![Alt text](C:\Users\nghiemthai1\OneDrive\college pakage\Embedded\lab-2-blinking-leds-nghiemthai1\Off_Board Blink "Off_Board")
+![img_1426](https://user-images.githubusercontent.com/30231031/31590288-c5d1a48e-b1db-11e7-8128-cd8620249a8e.jpg)
  
 Make sure you program your G2 chip with the provided project of "MSP430G2553".
 After you connect the circuit to the battery, the 2 LEDs should blink at different rate. 
